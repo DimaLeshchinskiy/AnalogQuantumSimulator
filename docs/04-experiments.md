@@ -6,7 +6,65 @@ I began with the simplest question the apparatus could answer: could I prepare a
 
 For all of these experiments I power the laser from a **3 V power supply**. Before inserting foils, I orient the polarized laser until the laser and PBS alone give roughly equal spots. That is the starting adjustment that has worked best for me. The LP then prepares H or V; I do not use the bare laser's 50/50 split as a substitute for that preparation.
 
-The chains below run from laser to PBS, omitting empty holders. I reference angles to the H/V optical axes established with the LP, rather than assuming a printed zero is exact. In equations, $H$ means Hadamard and $|H\rangle=|0\rangle$ means horizontal polarization. Rightmost operators act first.
+The chains below run from laser to PBS, omitting empty holders. I reference angles to the H/V optical axes established with the LP, rather than assuming a printed zero is exact.
+
+## Reading the calculations
+
+Before putting in the first gate, I need a way to describe what goes into it. I write the polarization as a column vector:
+
+$
+|\psi\rangle=\begin{pmatrix}\alpha\\\beta\end{pmatrix},
+\qquad
+|H\rangle=|0\rangle=\begin{pmatrix}1\\0\end{pmatrix},
+\qquad
+|V\rangle=|1\rangle=\begin{pmatrix}0\\1\end{pmatrix}.
+$
+
+The notation $|\psi\rangle$ is just a name for that vector. The top entry is the horizontal field amplitude and the bottom entry is the vertical amplitude. I normalize them so $|\alpha|^2+|\beta|^2=1$. The PBS reads out the squared magnitudes:
+
+$
+P_H=|\alpha|^2,\qquad P_V=|\beta|^2.
+$
+
+Thus $(1,0)^T$ gives 100/0, while $(1,1)^T/\sqrt2$ gives 50/50 because $(1/\sqrt2)^2=1/2$. The entries themselves are amplitudes, not percentages. Negative entries do not mean negative brightness. For complex entries, $i^2=-1$ and $|a+ib|^2=a^2+b^2$ for real $a,b$; I will need this in the QWP experiment.
+
+A gate acts by multiplying its matrix by the state column. Each output entry is a row of the matrix multiplied by the column:
+
+$
+G|\psi\rangle=
+\begin{pmatrix}a&b\\c&d\end{pmatrix}
+\begin{pmatrix}\alpha\\\beta\end{pmatrix}
+=
+\begin{pmatrix}a\alpha+b\beta\\c\alpha+d\beta\end{pmatrix}.
+$
+
+If light passes through gate A and then gate B, I calculate $B(A|\psi\rangle)=BA|\psi\rangle$: the matrix closest to the state acts first. I can either follow the state after each plate or multiply the gate matrices first.
+
+This is also how ideal single-qubit quantum gates act on qubit states. My beam uses the same algebra, with normalized classical intensities in place of single-photon outcome probabilities.
+
+## The gate matrices I use
+
+These are all the gate matrices needed for the experiments below:
+
+$
+I=\begin{pmatrix}1&0\\0&1\end{pmatrix},
+\qquad
+X=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$
+
+$
+Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+\qquad
+H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+$
+
+$
+Q=\begin{pmatrix}1&0\\0&i\end{pmatrix}.
+$
+
+I is identity: it leaves the vector unchanged and needs no plate in the oracle position. X swaps the two entries; I implement it with an HWP at 45°. Z changes the sign of the V amplitude, using an HWP at 0°. H mixes the two amplitudes, using an HWP at 22.5°. Plain $H$ means the **Hadamard matrix**, while $|H\rangle$ means the **horizontal state**.
+
+For Q I use a QWP at 0°, with the convention that it multiplies the V amplitude by $i$. All five matrices preserve normalization in the ideal model. The LP prepares the input before these gates; it is a lossy optical element, rather than one of these unitary gates.
 
 I judged the results by the spots on paper. The ideal fractions come from the matrices; my approximate real ratios are visual estimates. I did not use the unfinished photodiode readout or calculate intensities from camera pixels.
 
@@ -35,10 +93,16 @@ Next I kept H preparation and inserted an HWP at 22.5°:
 The calculation was short enough to keep beside the apparatus:
 
 $$
-H|H\rangle=\frac1{\sqrt2}
+\begin{aligned}
+H|H\rangle
+&=\frac1{\sqrt2}
 \begin{pmatrix}1&1\\1&-1\end{pmatrix}
-\begin{pmatrix}1\\0\end{pmatrix}
-=\frac{|H\rangle+|V\rangle}{\sqrt2}.
+\begin{pmatrix}1\\0\end{pmatrix}\\
+&=\frac1{\sqrt2}
+\begin{pmatrix}1\cdot1+1\cdot0\\1\cdot1+(-1)\cdot0\end{pmatrix}\\
+&=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}
+=\frac{|H\rangle+|V\rangle}{\sqrt2}=|+\rangle.
+\end{aligned}
 $$
 
 Both components have squared magnitude $1/2$, so I expected two equal spots. That is approximately what I saw.
@@ -55,7 +119,34 @@ I then inserted another HWP at the same nominal angle:
 
 `LP(H) → HWP₁(22.5°) → HWP₂(22.5°) → PBS`.
 
-Since $H^2=I$, the ideal result is H again, or 100/0. The output returned close to the original polarization.
+This time I can multiply the gate matrices before applying them to the input. Each entry of the product comes from a row of the left matrix and a column of the right one:
+
+$
+\begin{aligned}
+HH
+&=\frac12
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}\\
+&=\frac12
+\begin{pmatrix}
+1\cdot1+1\cdot1 & 1\cdot1+1\cdot(-1)\\
+1\cdot1+(-1)\cdot1 & 1\cdot1+(-1)\cdot(-1)
+\end{pmatrix}\\
+&=\frac12\begin{pmatrix}2&0\\0&2\end{pmatrix}
+=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I.
+\end{aligned}
+$
+
+The two factors $1/\sqrt2$ give the $1/2$ in front. The off-diagonal entries cancel, and the diagonal entries become one. This is the identity matrix for **any input state**, not just H.
+
+For the input I prepared here,
+
+$
+HH|H\rangle=I\begin{pmatrix}1\\0\end{pmatrix}
+=\begin{pmatrix}1\\0\end{pmatrix}=|H\rangle.
+$
+
+I therefore expect H again, or 100/0. The output returned close to the original polarization.
 
 ![My two-Hadamard sequence with two HWP cassettes and a dominant PBS output spot](../images/double_hadamard.jpg)
 
@@ -69,7 +160,25 @@ For NOT, I changed the HWP setting to 45°:
 
 `LP(H) → HWP(45°) → PBS`.
 
-Ideally $X|H\rangle=|V\rangle$, giving 0/100. I saw the bright output move to the other channel, with some residual light left behind.
+The X matrix swaps the two amplitudes. For my H input,
+
+$
+X|H\rangle=
+\begin{pmatrix}0&1\\1&0\end{pmatrix}
+\begin{pmatrix}1\\0\end{pmatrix}
+=\begin{pmatrix}0\\1\end{pmatrix}=|V\rangle.
+$
+
+It also works in the other direction:
+
+$
+X|V\rangle=
+\begin{pmatrix}0&1\\1&0\end{pmatrix}
+\begin{pmatrix}0\\1\end{pmatrix}
+=\begin{pmatrix}1\\0\end{pmatrix}=|H\rangle.
+$
+
+For the photographed H input, I expect $(P_H,P_V)=(|0|^2,|1|^2)=(0,1)$, or 0/100. I saw the bright output move to the other channel, with some residual light left behind.
 
 I also tried two NOT plates:
 
@@ -81,7 +190,27 @@ I also tried two NOT plates:
 
 *The single- and double-plate tests. The photograph records the cassette arrangement; its labels do not measure the true optical axes.*
 
-For two ideal plates at +45°, $X^2=I$. A plate at −45° has $W_{1/2}(-45^\circ)=-X$, so the crossed pair gives $(-X)X=-I$. The global sign does not change the output intensities; both pairs should return to H.
+For two ideal plates at +45°, the matrices multiply to
+
+$
+XX=
+\begin{pmatrix}0&1\\1&0\end{pmatrix}
+\begin{pmatrix}0&1\\1&0\end{pmatrix}
+=\begin{pmatrix}1&0\\0&1\end{pmatrix}=I.
+$
+
+Applying them to H therefore gives $XX|H\rangle=I|H\rangle=|H\rangle$: an ideal 100/0 return.
+
+The −45° HWP has a slightly different matrix, $W_{1/2}(-45^\circ)=-X$. When it follows the +45° plate,
+
+$
+(-X)X=
+\begin{pmatrix}0&-1\\-1&0\end{pmatrix}
+\begin{pmatrix}0&1\\1&0\end{pmatrix}
+=\begin{pmatrix}-1&0\\0&-1\end{pmatrix}=-I.
+$
+
+On H input this produces $(-1,0)^T$. Its intensities are still $(|-1|^2,|0|^2)=(1,0)$. Multiplying the entire state by −1 changes only its global phase, so both ideal pairs return the same polarization and intensity pattern.
 
 In practice the crossed +45°/−45° combination looked better than some same-orientation combinations. This was one point where the real apparatus became more interesting than simply matching the expected bright spot. Two equal-retardance plates with orthogonal axes can cancel a shared retardance error, which is a possible explanation. I did not characterize the foils well enough to prove it. Across different states and sequences I saw results ranging from nearly one bright channel to appearances around 60/40.
 
@@ -135,11 +264,17 @@ I photographed two chains before the final analyzer:
 - A: `LP(H) → HWP(22.5°) → PBS`.
 - B: `LP(H) → HWP(22.5°) → QWP(0°) → PBS`.
 
-With my convention $Q(0^\circ)=\operatorname{diag}(1,i)$, A prepares $|+\rangle$ and B prepares
+A prepares $|+\rangle=(1,1)^T/\sqrt2$. With my QWP convention, the extra matrix in B gives
 
-$$
-|\psi_i\rangle=\frac{|H\rangle+i|V\rangle}{\sqrt2}.
-$$
+$
+Q|+\rangle=
+\begin{pmatrix}1&0\\0&i\end{pmatrix}
+\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}
+=\frac1{\sqrt2}\begin{pmatrix}1\\i\end{pmatrix}
+=|\psi_i\rangle.
+$
+
+The V amplitude now has a relative phase of a quarter-cycle. Its squared magnitude remains $|i/\sqrt2|^2=1/2$.
 
 Both give ideal 50/50 H/V outputs. The PBS alone cannot reveal their relative-phase difference.
 
@@ -151,15 +286,22 @@ Both give ideal 50/50 H/V outputs. The PBS alone cannot reveal their relative-ph
 
 I then put an HWP at 22.5° immediately before the PBS in each chain. In B the full sequence is LP, HWP, QWP, HWP, using four cassette positions.
 
-The extra Hadamard changes the analysis basis:
+The extra Hadamard changes the analysis basis. In A, the two equal amplitudes add in the top entry and cancel in the bottom one:
 
-$$
-H|+\rangle=|H\rangle,\qquad
-H|\psi_i\rangle=
-\frac{(1+i)|H\rangle+(1-i)|V\rangle}{2}.
-$$
+$
+H\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}
+=\frac12\begin{pmatrix}1+1\\1-1\end{pmatrix}
+=\begin{pmatrix}1\\0\end{pmatrix}=|H\rangle.
+$
 
-I therefore expect A to become 100/0 while B remains 50/50.
+In B, the phase changes those sums:
+
+$
+H\frac1{\sqrt2}\begin{pmatrix}1\\i\end{pmatrix}
+=\frac12\begin{pmatrix}1+i\\1-i\end{pmatrix}.
+$
+
+Here $|(1+i)/2|^2=(1^2+1^2)/4=1/2$, and the bottom entry has the same squared magnitude. I therefore expect A to become 100/0 while B remains 50/50.
 
 | A after the analyzer | B after the analyzer |
 | --- | --- |
