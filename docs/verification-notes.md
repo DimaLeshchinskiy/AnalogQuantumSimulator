@@ -1,35 +1,29 @@
-# Evidence and verification notes
+# Notes on the surviving evidence
 
-[Project](../README.md) · [Development history](03-hardware-and-development.md)
+[My project](../README.md) · [The build story](03-hardware-and-development.md) · [Circuit details](electronics-reference.md)
 
-This record separates inspected design evidence from the builder's account supplied in the [documentation brief](../CODEX_OPTICAL_SIMULATOR_DOCUMENTATION_BRIEF.md) and [firmware addendum](../CODEX_FIRMWARE_RECOVERY_ADDENDUM.md). A design file establishes intended geometry or connectivity, not what was assembled or measured.
+I have written the main chapters as my account of the project. Here I keep track of what is visible in the files and photographs, what comes from my experience at the bench, and what I no longer know.
 
-| Claim | Evidence | Status |
-| --- | --- | --- |
-| Indexed removable cassette geometry; 22.5° steps | [Rotation modules](../construction/parts/rotation_plate.scad), [parameters](../construction/config/parameters.scad): 16 index positions | Verified design |
-| Five positions | Brief; [saved assembly](../construction/assemblies/full.scad) instantiates four indexed holders | Discrepancy; built count needs a photo |
-| Three HWP, two QWP, two LP | Brief only | Reported configuration; inventory unverified |
-| Installed laser wavelength/power, foil models | No purchase record or installed-device identification found | Unconfirmed |
-| ATtiny13A-S, TS912, two LED/resistor pairs, button and detector sockets | [BOM](../electro/main/main.csv), [schematic](../electro/main/main.kicad_sch), [PCB](../electro/main/main.kicad_pcb) | Verified design |
-| Amplifier feedback and MCU package-pin mapping | KiCad-exported schematic netlist, cross-checked against PCB pad nets | Verified design; no analog test result |
-| LED drive active high; button shorts PB2 to ground | D3/D4 cathodes on GNDD, R1/R2 from PB0/PB1; SW1 connectivity | Verified design; original software settings unknown |
-| Supply topology | Two cell symbols, SW2, unnamed TPS1, VCC net and J3 naming | Design only; converter model and voltage unconfirmed |
-| Board assembled, Nano ISP upload, four states/PWM tested, reversed LEDs corrected | Owner account in both briefs | Reported historical bench validation |
-| Original source absent from available material | Full recovery search below | No original recovered |
-| Detector integration unfinished; no calibrated dataset | Brief and addendum; no data files found | Reported integration status |
-| Optical experiments 1–5, leakage and crossed-plate observation | Brief only | Qualitative owner observations |
-| QWP phase experiment | Brief labels it proposed | Planned, no completed result |
+| Detail | What I have |
+| --- | --- |
+| Five cassette positions; 3 HWP, 2 QWP, 2 LP | The labeled inventory and five holders are visible in `images/full_setup.jpg`. The saved CAD contains four holders. |
+| 22.5° indexing | Sixteen positions in the [rotation geometry](../construction/parts/rotation_plate.scad) and [parameters](../construction/config/parameters.scad). This does not measure foil-axis accuracy. |
+| Laser power supply and initial orientation | I use a 3 V power supply. The laser is polarized; I orient it for roughly 50/50 with the PBS before inserting cassettes. This is my practical setup, not a calibrated polarization measurement. |
+| Optical specifications | I have not established the installed laser's wavelength/optical power or the exact foil models. |
+| Controller and amplifier circuit | [BOM](../electro/main/main.csv), [schematic](../electro/main/main.kicad_sch) and [PCB](../electro/main/main.kicad_pcb), with netlist and pad-net cross-checks. |
+| Programming and debugging | I successfully used Nano ISP, tested four states/button/PWM, and corrected reversed LEDs. I did not preserve the original program or a test log. |
+| Detector integration | I did not complete the photodiode readout or record calibrated intensity data. |
+| Gate experiments | My observations and photographs in [the experiment chapter](04-experiments.md); percentages are ideal predictions or explicitly labeled visual estimates. |
+| QWP comparison | Four A/B photographs. After the analyzer, my visual estimates were about 80/20 without QWP and 40/60 with it; these are not detector measurements. |
 
 ## Firmware recovery scope
 
-Inspection on 11 November 2026 covered hidden, ignored and untracked files, the initially empty `firmware/` directory, source/build filenames (`.ino`, `.c`, `.cpp`, `.h`, `.hex`, `.elf`, `.eep`, Arduino/PlatformIO configuration and related artifacts), and text searches for ATtiny, Arduino/ISP, PWM, BPW34, button and LED.
+The repository inspection on 11 November 2026 covered hidden, ignored and untracked files, the initially empty `firmware/` directory, Arduino/PlatformIO configuration, C/C++ and sketch source, and build artifacts such as HEX/ELF/EEP files. It also searched for ATtiny, Arduino/ISP, PWM, BPW34, button and LED references.
 
-The outer Git repository began with an unborn `main`, no objects, branches with commits, reflog entries or recoverable commits. `git ls-remote origin` succeeded without advertised refs. The hidden KiCad repository was separately audited across refs, reflogs and all stored objects, including dangling commits. Its 630 commit objects mention only two KiCad filenames; all 576 blobs are KiCad schematic/PCB content.
+At that inspection the outer Git repository had an unborn `main` with no stored history, and the configured remote advertised no refs. The nested KiCad repository was checked separately across refs, reflogs and all stored objects, including dangling commits. Its 630 commit objects mention only `main.kicad_sch` and `main.kicad_pcb`; all 576 blobs contain KiCad data.
 
-All 21 entries in `electro/main/main.zip` were listed and checked: design snapshots, project/library files and fabrication exports, with no firmware. Its schematic, PCB, library and Gerber copies match their working counterparts; project/preference files differ. The [history bundle](evidence/README.md) preserves the recovered design history. No claim is made about unrelated folders, cloud backups or the chip's flash; hardware was not accessed.
+The 21 entries in `electro/main/main.zip` contain design snapshots, project/library files and fabrication exports, with no firmware. Its schematic, PCB, library and Gerber copies match the working versions; project/preference files differ. The [portable history bundle](evidence/README.md) preserves the recovered design development.
 
-## Remaining evidence
+No original sketch or firmware binary was found in that material. This does not rule out a copy on another device or backup, and the chip's flash was not accessed.
 
-The [photo checklist](../images/README.md) covers the apparatus, true holder count, cassette labels, board, programming setup and output configurations. An original sketch or upload/build log would resolve firmware semantics and settings. Installed optical labels or purchase records would identify wavelength and retardance specifications. These additions would strengthen the record; none is required to close the documented qualitative project.
-
-No calibrated measurements are required for the current claims. Any later numerical intensity, contrast or fidelity claim would need detector calibration, a recorded procedure and actual data. Keep the QWP experiment marked planned unless performed and confirmed.
+I retain the reconstruction only as an unverified reference. No numerical fidelity or calibrated photometry follows from the photographs. An original sketch, upload log or installed-component identification would fill gaps in the record, but I am not treating those gaps as a reason to restart the project.

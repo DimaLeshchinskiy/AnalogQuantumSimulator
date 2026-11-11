@@ -1,52 +1,44 @@
-# Single-qubit optical simulator
+# Building a single-qubit optical simulator
 
-A DIY polarization-based quantum-gate analog that turns two-dimensional state vectors into removable optical elements and visible PBS output spots.
+I started this project because I wanted to see the mathematics I was studying in quantum informatics do something on a table. Instead of multiplying another pair of matrices on paper, I wanted to prepare a state, put a gate in its path, and watch the result change.
 
-> **This is a classical coherent-polarization experiment, not a quantum computer or a single-photon experiment.** Jones vectors reproduce single-qubit mathematics; this apparatus demonstrates no entanglement or quantum computational advantage.
+![My optical simulator on an aluminium rail, with five cassette positions, seven labeled optical cassettes and two visible PBS output spots](images/full_setup.jpg)
 
-> **Hero photo pending:** an angled view of the assembled apparatus. See the [photography checklist](images/README.md); no experimental photographs are included yet.
+*My finished optical setup. The beam travels from the laser on the right through the cassette positions to the polarizing beam splitter on the left. The loose cassettes are the gates and polarizers I swap into the beam.*
 
-## What was built
+Polarization gave me a practical way to do this. A beam has horizontal and vertical field components, and wave plates transform their amplitudes and relative phase using the same two-dimensional mathematics as a single qubit. **This is a classical optical analog, not a quantum computer or a single-photon experiment.** What I built is a way to explore that mathematics with real components.
 
-The builder wanted to connect quantum-information notation to a physical experiment, particularly the one-input Deutsch–Jozsa principle. The apparatus uses a laser, linear polarizers (LP), half-wave plates (HWP), quarter-wave plates (QWP), a polarizing beam splitter (PBS), and printed removable foil cassettes.
+## From a laser spot to a gate
 
-- Indexed holders provide designed **22.5° steps**.
-- The owner reports **five positions and seven cassettes** (3 HWP, 2 QWP, 2 LP). The saved CAD shows **four indexed holders**; the built inventory awaits photographs.
-- Visible PBS spots supported the final qualitative demonstrations.
-- A custom detector/controller PCB was designed and assembled, with controller/LED tests reported; the photodiode readout remained unfinished.
+My first idea was fairly small: a laser, a few optical elements and paper targets, with the one-input Deutsch–Jozsa algorithm as the experiment I wanted to reach. It grew into a rail with five positions for removable cassettes. I modeled and printed the holders, gave them 22.5° indexing, and prepared three half-wave plates (HWP), two quarter-wave plates (QWP) and two linear polarizers (LP).
+
+I power the laser from a **3 V power supply**. I also found that the laser itself is polarized. Before inserting any cassettes, I orient it so that the laser and polarizing beam splitter (PBS) alone produce roughly equal output spots. Starting around 50/50 has worked best experimentally. I then use an LP to prepare H or V for the gate experiments; the initial equal split is a source adjustment, not the prepared input state.
 
 ```text
-Laser → LP: prepare input → wave plates: gates / phase oracle → PBS ┬→ H spot
-                                                                └→ V spot
+Laser, 3 V → LP: prepare H or V → wave plates: gates / oracle → PBS → two spots
 ```
 
-H and V label calibrated polarization channels, not assumed transmission/reflection directions.
+Once that was working, I could replace symbols in a calculation with physical cassettes. An HWP at 22.5° gave the Hadamard analog. Two of them brought the light back toward its starting polarization. At 45°, the plate swapped the bright output like an X gate. A third plate let me insert a phase oracle between two Hadamards and try the Deutsch–Jozsa sequence.
 
-## Six demonstrations
+| Experiment | What I was looking for |
+| --- | --- |
+| LP and PBS | Prepare H and V and identify the two outputs |
+| One Hadamard | Turn H into approximately equal H/V outputs |
+| Two Hadamards | Return toward H: $H^2=I$ |
+| NOT and double NOT | Swap H/V, then try returning to the input |
+| Deutsch–Jozsa | Distinguish identity and Z phase oracles through $HZH=X$ |
+| QWP and a final analyzer | Reveal a relative-phase difference hidden in H/V intensity |
 
-Ideal ratios below mean normalized classical intensities for H input. “Observed” means the builder's qualitative account, not a calibrated dataset.
+The last experiment is now photographed too. After the final analyzer, I estimated roughly 80/20 without the QWP and 40/60 with it. That is the qualitative distinction I wanted to see, with real optical errors still visible; the ideal predictions are 100/0 and 50/50.
 
-| Experiment | Ideal H/V output | Status |
-| --- | --- | --- |
-| 1. LP preparation and PBS analysis | H: 100/0; V: 0/100 | Observed |
-| 2. Hadamard analog, HWP at 22.5° | 50/50 | Observed |
-| 3. Two Hadamards | 100/0 | Approximate return observed |
-| 4. NOT and double NOT | X: 0/100; XX: 100/0 | Observed with leakage and sequence differences |
-| 5. One-bit Deutsch–Jozsa phase oracle | Constant: 100/0; balanced: 0/100 | Qualitative distinction observed |
-| 6. QWP relative phase, with basis change | Before: both 50/50; after: 100/0 versus 50/50 | **Planned; unconfirmed** |
+## The part I did not finish
 
-## Read and reproduce
+Alongside the optics, I designed and assembled an ATtiny13A/TS912 board for two BPW34 photodiodes, a button and two indicator LEDs. I programmed the controller through an Arduino Nano as ISP and tested the button, mode switching and PWM. I also got to debug the fairly ordinary problem of LEDs installed the wrong way around.
 
-1. [Theory: from polarization to a qubit](docs/01-theory.md)
-2. [Optical components as gates](docs/02-optical-components.md)
-3. [Hardware and the development story](docs/03-hardware-and-development.md)
-4. [Six experiment procedures](docs/04-experiments.md)
-5. [Limitations and lessons](docs/05-limitations-and-lessons.md)
+I did not finish connecting the photodiodes into the optical readout. For these demonstrations I used the spots on paper. The electronics could have made comparisons more objective, but they would not have corrected imperfect wave plates. By that point the optical setup was already doing what I had wanted to learn from it, so I stopped there.
 
-Start with H/V preparation, reference every plate angle to the optical axis, then follow the experiment chains. The optical demonstrations require no electronic readout. [CAD and printing](construction/README.md), [KiCad files](electro/main/), [preserved design history](docs/evidence/README.md) and [evidence notes](docs/verification-notes.md) document the available artifacts.
+I did not keep the original firmware source. The [reference sketch](firmware/README.md) is explicitly an unverified reconstruction; it is not the program I originally uploaded.
 
-**Firmware status:** no original sketch or binary was recovered. The [illustrative, unverified reference](firmware/reference/attiny13a_reference_reconstruction.ino) is not historical firmware and was not flashed. See the [firmware history](docs/03-hardware-and-development.md#firmware-implementation-and-source-preservation).
+I have written the rest as the route I took through the project: [the mathematics that made it possible](docs/01-theory.md), [the optical parts and how I set them up](docs/02-optical-components.md), [building the mechanics and electronics](docs/03-hardware-and-development.md), [the experiments with photographs](docs/04-experiments.md), and [what the imperfect results taught me](docs/05-limitations-and-lessons.md). The [CAD](construction/README.md), [circuit details](docs/electronics-reference.md) and [preserved design history](docs/evidence/README.md) are here for anyone who wants to look closer.
 
-The ATtiny13A/TS912 board represents real engineering work: Nano ISP programming, button/PWM checks and corrected LED orientation are reported. The two BPW34 detectors were not fully integrated, so there are no verified electronic intensity measurements. The project closed after achieving its optical teaching goal.
-
-**Laser safety:** never look into the beam or specular reflections; use suitable beam stops and laser safety practices. The installed laser's wavelength and power are unverified.
+**Laser safety:** never look into the beam or specular reflections; use suitable beam stops and laser safety practices. The 3 V figure describes the electrical supply, not optical power; I have not established the installed laser's wavelength or optical power.

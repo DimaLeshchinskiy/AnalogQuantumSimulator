@@ -1,10 +1,10 @@
-# From polarization to a qubit
+# The mathematics I wanted to see
 
-[Project](../README.md) · [Next: optical components](02-optical-components.md)
+[Project](../README.md) · [Next: putting the optics together](02-optical-components.md)
 
-## Two complex amplitudes
+The connection that made this project possible was simple: the polarization of a coherent beam has two complex amplitudes. I could write them in a column, just as I would write the state of a qubit. That did not turn the laser into quantum hardware, but it gave me a physical system on which I could try the same calculations.
 
-For a coherent, fully polarized monochromatic beam propagating along a fixed path, the transverse electric field has complex H and V amplitudes. Removing its overall intensity gives a normalized Jones vector:
+I take horizontal and vertical polarization as my basis, $|H\rangle=(1,0)^T$ and $|V\rangle=(0,1)^T$. After separating out the overall intensity, the Jones vector is
 
 $$
 |\psi\rangle=
@@ -13,34 +13,34 @@ $$
 \qquad |\alpha|^2+|\beta|^2=1.
 $$
 
-We identify $|H\rangle=|0\rangle=(1,0)^T$ and $|V\rangle=|1\rangle=(0,1)^T$. The ket notation emphasizes the mathematical analogy. Here the amplitudes describe a classical field, not an individual photon.
-
-An ideal H/V PBS separates the two components. If total output intensity is nonzero, its normalized outputs are
+I identify these basis vectors with qubit $|0\rangle$ and $|1\rangle$. In my apparatus, however, $\alpha$ and $\beta$ describe electric-field amplitudes. With an ideal PBS, the normalized intensities are
 
 $$
 P_H=\frac{I_H}{I_H+I_V}=|\alpha|^2,\qquad
 P_V=\frac{I_V}{I_H+I_V}=|\beta|^2.
 $$
 
-These are classical intensity fractions, numerically analogous to Born probabilities. Real channels can have different transmission and detection efficiencies.
+These have the same numerical form as Born probabilities. I see two classical light outputs, rather than a sequence of single-photon measurement outcomes.
 
-## Phase carries information
+## Why two equal spots were not the whole story
 
-Multiplying both amplitudes by $e^{i\gamma}$ changes the global phase. It does not change polarization or these intensities in this single-path experiment. The phase between the amplitudes does matter:
+The PBS gives me access to amplitude magnitudes, but not directly to relative phase. For example,
 
 $$
 |+\rangle=\frac{|H\rangle+|V\rangle}{\sqrt2},\qquad
 |-\rangle=\frac{|H\rangle-|V\rangle}{\sqrt2},\qquad
-|\psi_i\rangle=\frac{|H\rangle+i|V\rangle}{\sqrt2}.
+|\psi_i\rangle=\frac{|H\rangle+i|V\rangle}{\sqrt2}
 $$
 
-The first two are orthogonal diagonal linear polarizations. The third has equal amplitudes in quadrature and is circular in the ideal model. More general amplitude/phase combinations describe elliptical polarization. All three states above give 50/50 in H/V, so the initial two spots cannot distinguish them.
+all give ideal 50/50 H/V outputs. The first two are different linear polarizations; the third is circular in this ideal model. Other amplitude and phase combinations give elliptical polarization.
 
-Normalized pure polarization states, modulo global phase, form a Poincaré sphere corresponding mathematically to the qubit Bloch sphere. Coordinate signs and circular-polarization handedness depend on conventions. Partially polarized light needs a coherence-matrix description; a single normalized Jones vector does not represent it.
+This also explains a detail of my starting alignment. I orient the polarized laser so that the bare laser and PBS look roughly 50/50. That tells me about the two magnitudes, but does not identify the relative phase or prove that the laser is in $|+\rangle$. The LP inserted afterward prepares the linear input for each experiment.
 
-## Matrices and conventions
+A common factor $e^{i\gamma}$ changes the global phase and leaves polarization unchanged. Changing the phase between H and V changes the state. Normalized pure polarization states, with global phase removed, form the Poincaré sphere corresponding to the qubit Bloch sphere. A Jones vector describes coherent, fully polarized light; partially polarized light needs a coherence-matrix description.
 
-Angles are measured from calibrated H toward V in the transverse basis. Define
+## Turning a plate into a matrix
+
+I measure plate angles from my H reference toward V. To keep the signs consistent, I use
 
 $$
 R(\theta)=
@@ -51,7 +51,7 @@ J_\Delta(\theta)=R(\theta)
 R(-\theta).
 $$
 
-This specifies our ideal retarder convention. For a half-wave plate, $\Delta=\pi$:
+Here $\Delta$ is the retardance, the phase difference introduced between the plate's two axes. For an ideal half-wave plate, $\Delta=\pi$, giving
 
 $$
 W_{1/2}(\theta)=
@@ -61,23 +61,24 @@ W_{1/2}(\theta)=
 \end{pmatrix}.
 $$
 
-Thus $W_{1/2}(0^\circ)=Z$, $W_{1/2}(22.5^\circ)=H$ and $W_{1/2}(45^\circ)=X$, where
+Three settings were particularly useful:
 
 $$
-Z=\begin{pmatrix}1&0\\0&-1\end{pmatrix},\quad
-H=\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},\quad
-X=\begin{pmatrix}0&1\\1&0\end{pmatrix}.
+W_{1/2}(0^\circ)=Z=
+\begin{pmatrix}1&0\\0&-1\end{pmatrix},
 $$
 
-Plain $H$ denotes the **Hadamard gate**; $|H\rangle$ denotes horizontal polarization. A real plate can add an intensity-irrelevant global phase.
-
-The **rightmost operator acts first**: a beam traversing A then B has output $BA|\psi\rangle$. For example,
-
 $$
-H|H\rangle=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}=|+\rangle.
+W_{1/2}(22.5^\circ)=H=
+\frac1{\sqrt2}\begin{pmatrix}1&1\\1&-1\end{pmatrix},
+\qquad
+W_{1/2}(45^\circ)=X=
+\begin{pmatrix}0&1\\1&0\end{pmatrix}.
 $$
 
-Composition follows directly:
+I use plain $H$ for the Hadamard gate and $|H\rangle$ for horizontal polarization. With H input, the 22.5° plate gives $H|H\rangle=|+\rangle$, so I expect two equal PBS outputs.
+
+When I put plates in sequence, the rightmost operator acts first. Light passing through A and then B is described by $BA|\psi\rangle$. This makes two of my experiments direct matrix multiplications:
 
 $$
 H^2=\frac12
@@ -91,11 +92,13 @@ HZH=\frac12
 \begin{pmatrix}1&1\\-1&1\end{pmatrix}=X.
 $$
 
-## A phase revealed by another basis
+The first sequence returns the input; the second turns a phase change between Hadamards into an output swap.
 
-Our quarter-wave convention is $Q(0^\circ)=J_{\pi/2}(0^\circ)=\operatorname{diag}(1,i)$, so $Q(0^\circ)|+\rangle=|\psi_i\rangle$. Fast/slow-axis labels and handedness conventions vary; these equations define the choice used here.
+## Making phase visible
 
-Adding a Hadamard before the PBS changes the measurement basis:
+For the quarter-wave plate I choose $Q(0^\circ)=\operatorname{diag}(1,i)$, consistent with $J_{\pi/2}(0^\circ)$. Fast/slow-axis and circular-handedness conventions vary; these equations specify mine.
+
+Applying Q to $|+\rangle$ gives $|\psi_i\rangle$. Both still look 50/50 in H/V. If I add a Hadamard immediately before the PBS,
 
 $$
 H|+\rangle=|H\rangle,\qquad
@@ -103,6 +106,6 @@ H|\psi_i\rangle=
 \frac{(1+i)|H\rangle+(1-i)|V\rangle}{2}.
 $$
 
-The outputs become 100/0 and 50/50 respectively because $|1\pm i|^2/4=1/2$. This is the ideal prediction for the proposed phase experiment, not a recorded measurement.
+The first now gives ideal 100/0, while the second stays 50/50 because $|1\pm i|^2/4=1/2$. The extra plate changes the measurement basis. It is the step that lets the relative phase affect the spots I can see.
 
-The analogy reproduces single-qubit linear algebra. It does not demonstrate photon-counting statistics, quantum state collapse, entanglement, many-qubit scaling or quantum speedup. The PBS routes classical field energy into two paths; looking at the spots is not a single-photon projective-measurement experiment.
+That is the part of single-qubit mathematics I can explore here. I am not reproducing quantum state collapse, photon-counting statistics, entanglement or many-qubit scaling. The [experiments](04-experiments.md) show what happened when I put these ideal matrices into imperfect physical holders.
