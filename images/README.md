@@ -1,4 +1,4 @@
-# Photographs from my experiments
+# Photographs and circuit illustrations
 
 [My project](../README.md) · [The experiments, with photographs](../docs/04-experiments.md)
 
@@ -28,4 +28,14 @@ I keep the original filenames so the photographs remain easy to match to the exp
 
 The experiment chapter displays these pictures beside their explanation. I use them to show the arrangements and visible spots, not to calculate intensities from pixels. Exposure, saturation, viewing angle and scattering make that unreliable.
 
-I have not included close-up PCB, programming or CAD photographs here. The actual design files remain in [construction](../construction/) and [electro](../electro/main/). While taking photographs, I keep my eyes out of the beam and specular reflections and use suitable beam stops and laser safety practices.
+## Electronics illustrations
+
+For the [electronics chapter](../docs/03-hardware-and-development.md), I have included a 3D PCB render and my schematic. The render shows the design rather than a photograph of the assembled board.
+
+| File | What it shows |
+| --- | --- |
+| `pcb_render.png` | 3D view of my detector/controller PCB, with the two LEDs, button, controller, amplifier and connectors. |
+| `schema.png` | A PNG rendering of the supplied one-page schematic PDF, displayed directly in the chapter. |
+| `schema.pdf` | The original schematic document, retained unchanged for [full-size viewing](schema.pdf). |
+
+I have not included close-up assembly, programming or CAD photographs here. The actual design files remain in [construction](../construction/) and [electro](../electro/main/). While taking photographs, I keep my eyes out of the beam and specular reflections and use suitable beam stops and laser safety practices.

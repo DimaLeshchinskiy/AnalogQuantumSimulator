@@ -4,3 +4,6 @@ construction/assemblies/previews/
 
 # KiCad's nested local Git repository is preserved as a portable evidence bundle.
 electro/main/.history/
+
+# KiCad editor session locks
+electro/main/~*.lck
