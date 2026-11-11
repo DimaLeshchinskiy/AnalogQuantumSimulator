@@ -10,7 +10,17 @@ That remained the essential experiment. What changed was how much work I put int
 
 I modeled the mechanical parts in OpenSCAD, printed them, and ordered the small screws, nuts and other hardware needed to assemble them. The rail gave the laser, foil holders and PBS a common mechanical reference. Each optical cassette could be removed and reused in another holder.
 
+![OpenSCAD preview of the rail assembly with four indexed cassette holders, the PBS and detector positions on the main and reflected branches](../images/assembly-full.png)
+
+*My CAD assembly shows the main optical rail and the reflected detector branch. This model has four cassette holders; the physical setup below has five.*
+
 The rotation mechanism has a fixed indexed ring and a removable rotor carrying the foil cassette. Sixteen positions around a full turn give 22.5° steps, which include the nominal settings for Z, Hadamard and X. This was convenient for changing gates, although I later had to keep the distinction between a mechanical setting and the foil's true optical axis in mind.
+
+| Fixed indexed ring | Removable rotor | Foil cassette |
+| --- | --- | --- |
+| ![CAD preview of the fixed rotation stator and its rail mount](../images/holder-rotation-stator.png) | ![CAD preview of the removable rotation rotor](../images/part-rotation-rotor.png) | ![CAD preview of the separate foil cassette with its optical opening and attachment holes](../images/part-filter-cassette.png) |
+
+*The three pieces of the cassette mechanism. The fixed ring provides the indexed positions, the rotor carries the cassette, and the foil sits in its own replaceable holder.*
 
 ![My assembled simulator with five cassette positions and all seven labeled cassettes laid out beside it](../images/full_setup.jpg)
 
@@ -33,6 +43,10 @@ I designed the circuit around a TS912 dual operational amplifier and an ATtiny13
 The BPW34 produces a photocurrent. In each channel I used the TS912 with feedback from its output to the inverting input to convert that current into a voltage. The feedback path contains a 10 kΩ resistor and a parallel 100 nF capacitor. The two outputs connect to the ATtiny's analog-input nets.
 
 I put the detector connections on external sockets so the photodiodes could sit at the two optical outputs. The board also has test points for the supply and the two amplifier outputs, making those nodes accessible during debugging. The [circuit reference](electronics-reference.md) gives the full connections and component values.
+
+![CAD preview of my BPW34 photodiode holder with a common rail mounting foot](../images/holder-bpw34.png)
+
+*The BPW34 holder model for the planned detector channels. Making these mounts was one part of the readout work; the complete optical measurement chain remained unfinished.*
 
 ## Turning the circuit into a board
 

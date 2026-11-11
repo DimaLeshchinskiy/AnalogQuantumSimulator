@@ -38,4 +38,22 @@ For the [electronics chapter](../docs/03-hardware-and-development.md), I have in
 | `schema.png` | A PNG rendering of the supplied one-page schematic PDF, displayed directly in the chapter. |
 | `schema.pdf` | The original schematic document, retained unchanged for [full-size viewing](schema.pdf). |
 
-I have not included close-up assembly, programming or CAD photographs here. The actual design files remain in [construction](../construction/) and [electro](../electro/main/). While taking photographs, I keep my eyes out of the beam and specular reflections and use suitable beam stops and laser safety practices.
+## CAD previews
+
+I copied these seven existing OpenSCAD previews from `construction/assemblies/previews/` into this directory without changing their contents. They illustrate the mechanical design in chapters [2](../docs/02-optical-components.md) and [3](../docs/03-hardware-and-development.md).
+
+| File | What it shows |
+| --- | --- |
+| `assembly-full.png` | Saved rail assembly, with four cassette holders and main/reflected detector positions. The photographed build has five holders. |
+| `holder-laser.png` | Laser holder and rail mount. |
+| `holder-pbs.png` | PBS holder and rail mount. |
+| `holder-rotation-stator.png` | Fixed indexed ring and its mounting foot. |
+| `part-rotation-rotor.png` | Removable indexed rotor. |
+| `part-filter-cassette.png` | Separate foil cassette and attachment holes. |
+| `holder-bpw34.png` | BPW34 detector holder model. |
+
+## Calculated illustrations
+
+`waveplate-rotation.svg` shows ideal polarization trajectories and normalized H/V outputs for fixed H input while rotating an HWP or QWP. I calculated it using the Jones convention in the [theory chapter](../docs/01-theory.md#turning-a-plate-into-a-matrix). The curves trace the electric field at one point over time; they are not photographs, beam paths or measurements of my foils.
+
+I have not included photographs of soldering or the programming setup. The actual design files remain in [construction](../construction/) and [electro](../electro/main/). While taking photographs, I keep my eyes out of the beam and specular reflections and use suitable beam stops and laser safety practices.
