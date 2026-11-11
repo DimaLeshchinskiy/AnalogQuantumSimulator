@@ -96,7 +96,18 @@ The first sequence returns the input; the second turns a phase change between Ha
 
 ## Making phase visible
 
-For the quarter-wave plate I choose $Q(0^\circ)=\operatorname{diag}(1,i)$, consistent with $J_{\pi/2}(0^\circ)$. Fast/slow-axis and circular-handedness conventions vary; these equations specify mine.
+For the quarter-wave plate I choose
+
+$$
+Q(0^\circ)=
+\begin{pmatrix}
+1&0\\
+0&i
+\end{pmatrix},
+\qquad i^2=-1.
+$$
+
+This is consistent with $J_{\pi/2}(0^\circ)$: the H amplitude stays unchanged, while the V amplitude is multiplied by $i$. Fast/slow-axis and circular-handedness conventions vary; these equations specify mine.
 
 Applying Q to $|+\rangle$ gives $|\psi_i\rangle$. Both still look 50/50 in H/V. If I add a Hadamard immediately before the PBS,
 

@@ -84,22 +84,52 @@ A QWP changes the relative timing by a quarter-cycle. The result depends on how 
 
 The 45° condition is also illustrated in this [Harvard polarization demonstration](https://sciencedemonstrations.fas.harvard.edu/presentations/circular-polarization). It is the angle **between the input polarization and the plate axes** that matters.
 
-I use the convention $Q(0^\circ)=\operatorname{diag}(1,i)$, where $i^2=-1$. With H input, the plate at 0° has nothing to act on in the V component:
+At 0°, I use a QWP matrix that leaves the H amplitude unchanged and multiplies the V amplitude by i. Here i is the imaginary unit, so i² = −1:
+
+```math
+Q(0^\circ)=
+\begin{pmatrix}
+1&0\\
+0&i
+\end{pmatrix}.
+```
+
+With H input, there is no V component to delay, so the output stays H:
 
 ```math
 Q(0^\circ)|H\rangle=
-\begin{pmatrix}1&0\\0&i\end{pmatrix}
-\begin{pmatrix}1\\0\end{pmatrix}
-=\begin{pmatrix}1\\0\end{pmatrix}.
+\begin{pmatrix}
+1&0\\
+0&i
+\end{pmatrix}
+\begin{pmatrix}
+1\\
+0
+\end{pmatrix}
+=\begin{pmatrix}
+1\\
+0
+\end{pmatrix}.
 ```
 
 With + input, the same setting has two equal components:
 
 ```math
 Q(0^\circ)|+\rangle=
-\begin{pmatrix}1&0\\0&i\end{pmatrix}
-\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}
-=\frac1{\sqrt2}\begin{pmatrix}1\\i\end{pmatrix}.
+\begin{pmatrix}
+1&0\\
+0&i
+\end{pmatrix}
+\frac{1}{\sqrt{2}}
+\begin{pmatrix}
+1\\
+1
+\end{pmatrix}
+=\frac{1}{\sqrt{2}}
+\begin{pmatrix}
+1\\
+i
+\end{pmatrix}.
 ```
 
 That is the circular state used in my phase experiment. If I keep H input instead and turn the QWP to 45°, I also get a circular state:
