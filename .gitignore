@@ -1,0 +1,6 @@
+# Generated OpenSCAD outputs
+construction/stl/
+construction/assemblies/previews/
+
+# KiCad's nested local Git repository is preserved as a portable evidence bundle.
+electro/main/.history/
