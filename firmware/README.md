@@ -1,6 +1,6 @@
 # The firmware I did not preserve
 
-[The electronics story](../docs/03-hardware-and-development.md#firmware-implementation-and-source-preservation) · [Circuit reference](../docs/electronics-reference.md)
+[The electronics story](../docs/03-hardware-and-development.md#programming-and-bringing-the-board-to-life) · [Circuit reference](../docs/electronics-reference.md)
 
 I programmed my ATtiny13A through an Arduino Nano acting as ISP. I tested the button, four operating states and PWM/LED behavior, and corrected LEDs that I had installed in reverse. Unfortunately, I did not keep the original sketch.
 
