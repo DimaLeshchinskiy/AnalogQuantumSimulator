@@ -65,3 +65,7 @@ Intermediate saves contain incomplete connections. I have no record of the reaso
 | Indexed rotation | Continuous adjustment | The 22.5° steps include useful gate settings, while limiting fine correction. |
 | A detector/controller board | Visual comparison alone | I wanted an electronic readout; its integration remained unfinished. |
 | Visible spots for the final demonstrations | Completing and calibrating the readout first | The optical experiments already met my educational goal. |
+
+---
+
+**Next appendix:** [Notes on the surviving evidence](verification-notes.md) →

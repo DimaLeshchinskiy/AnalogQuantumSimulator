@@ -155,3 +155,7 @@ Laser → LP input → HWP / QWP sequence → PBS → two paper targets
 I leave unused holders empty. The most crowded sequence here is the QWP comparison with its final analyzer: LP, HWP, QWP, HWP. It uses four of the five positions.
 
 The two spots are enough to follow the qualitative changes. I also made holders and a circuit for two BPW34 photodiodes, but did not finish that readout. The next chapter is the story of that mechanical and electronic work.
+
+---
+
+**Next chapter:** [Building the apparatus](03-hardware-and-development.md) →

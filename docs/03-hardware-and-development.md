@@ -77,3 +77,7 @@ Meanwhile, I could already perform the optical experiments. A Hadamard split the
 The imperfect results also helped me decide where to stop. The electronics would have made comparisons more objective, but they would not have corrected a wave plate's axis or retardance. Calibrating a detector channel could remove its gain bias; it could not remove an imbalance already present in the light.
 
 By that point, the optical setup met my original educational goal. I chose to finish with the visible demonstrations and leave the electronic readout as an unfinished part of the build. The next chapter follows those experiments through the actual cassette arrangements and output spots.
+
+---
+
+**Next chapter:** [Trying the gates, one cassette at a time](04-experiments.md) →

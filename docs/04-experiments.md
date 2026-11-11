@@ -393,3 +393,7 @@ Here $|(1+i)/2|^2=(1^2+1^2)/4=1/2$, and the bottom entry has the same squared ma
 This gave me the distinction I was looking for: one case became clearly dominated by one output, while the other stayed much closer to an even split. The results were imperfect, and I did not measure those ratios with detectors. I also would not claim that two equal H/V spots alone prove circular polarization or that this comparison amounts to full state tomography.
 
 It was a useful place to finish. The phase was invisible in one measurement basis and affected the output in another, with the same plates and paper targets I had started with.
+
+---
+
+**Next chapter:** [What the imperfect results taught me](05-limitations-and-lessons.md) →

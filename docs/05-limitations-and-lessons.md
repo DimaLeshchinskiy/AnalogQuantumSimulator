@@ -48,3 +48,7 @@ I had tested the controller, button and LEDs, but I had not completed the photod
 I also keep the boundary of the analogy clear. My laser carries a classical field; I did not demonstrate single-photon measurement, entanglement, quantum back-action or computational advantage. What I gained was a physical way to think through a two-dimensional state and its transformations, including the imperfections that disappear on paper.
 
 The CAD, electronics files, photographs and this account are where I am closing the project. Detector integration or polarization tomography could be separate experiments later. They are not prerequisites for understanding what I built here.
+
+---
+
+**Continue:** [Circuit details (technical appendix)](electronics-reference.md) · [Back to the project](../README.md)

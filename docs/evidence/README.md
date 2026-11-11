@@ -17,3 +17,7 @@ The original reflogs themselves are not transported by a bundle. Their extra com
 The [electronics reference](../electronics-reference.md#design-saves) cites selected commit IDs. The audit inspected 398 schematic-changing states in ref-reachable history and exported representative netlists with KiCad 10. Current schematic connectivity was compared with the local-history tip and the ZIP copy; physical pad nets were independently read from the current PCB.
 
 Commit timestamps span **29 August 2026, 00:03:15 to 31 August 2026, 00:12:22**, recorded with UTC+02:00 offsets. They date design saves, not fabrication or experiments. Autosave messages provide no reliable explanation of why a change was made. Intermediate snapshots include incomplete circuits; historical component values are not operating recommendations.
+
+---
+
+**Back to the project:** [Single-qubit optical simulator](../../README.md)

@@ -27,3 +27,7 @@ The 21 entries in `electro/main/main.zip` contain design snapshots, project/libr
 No original sketch or firmware binary was found in that material. This does not rule out a copy on another device or backup, and the chip's flash was not accessed.
 
 I retain the reconstruction only as an unverified reference. No numerical fidelity or calibrated photometry follows from the photographs. An original sketch, upload log or installed-component identification would fill gaps in the record, but I am not treating those gaps as a reason to restart the project.
+
+---
+
+**Next appendix:** [Preserved KiCad history](evidence/README.md) →

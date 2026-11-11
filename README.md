@@ -42,3 +42,7 @@ I did not keep the original firmware source. The [reference sketch](firmware/REA
 I have written the rest as the route I took through the project: [the mathematics that made it possible](docs/01-theory.md), [the optical parts and how I set them up](docs/02-optical-components.md), [building the mechanics and electronics](docs/03-hardware-and-development.md), [the experiments with photographs](docs/04-experiments.md), and [what the imperfect results taught me](docs/05-limitations-and-lessons.md). The [CAD](construction/README.md), [circuit details](docs/electronics-reference.md) and [preserved design history](docs/evidence/README.md) are here for anyone who wants to look closer.
 
 **Laser safety:** never look into the beam or specular reflections; use suitable beam stops and laser safety practices. The 3 V figure describes the electrical supply, not optical power; I have not established the installed laser's wavelength or optical power.
+
+---
+
+**Start reading:** [The mathematics I wanted to see](docs/01-theory.md) →

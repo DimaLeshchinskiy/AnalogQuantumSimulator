@@ -109,3 +109,7 @@ $$
 The first now gives ideal 100/0, while the second stays 50/50 because $|1\pm i|^2/4=1/2$. The extra plate changes the measurement basis. It is the step that lets the relative phase affect the spots I can see.
 
 That is the part of single-qubit mathematics I can explore here. I am not reproducing quantum state collapse, photon-counting statistics, entanglement or many-qubit scaling. The [experiments](04-experiments.md) show what happened when I put these ideal matrices into imperfect physical holders.
+
+---
+
+**Next chapter:** [Putting the optics together](02-optical-components.md) →
