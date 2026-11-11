@@ -62,11 +62,17 @@ $
 Q=\begin{pmatrix}1&0\\0&i\end{pmatrix}.
 $
 
-I is identity: it leaves the vector unchanged and needs no plate in the oracle position. X swaps the two entries; I implement it with an HWP at 45°. Z changes the sign of the V amplitude, using an HWP at 0°. H mixes the two amplitudes, using an HWP at 22.5°. Plain $H$ means the **Hadamard matrix**, while $|H\rangle$ means the **horizontal state**.
+$I$ is identity: it leaves the vector unchanged and needs no plate in the oracle position. $X$ swaps the two entries; I implement it with an HWP at 45°. $Z$ changes the sign of the V amplitude, using an HWP at 0°. $H$ mixes the two amplitudes, using an HWP at 22.5°. Plain $H$ means the **Hadamard matrix**, while $|H\rangle$ means the **horizontal state**.
 
-For Q I use a QWP at 0°, with the convention that it multiplies the V amplitude by $i$. All five matrices preserve normalization in the ideal model. The LP prepares the input before these gates; it is a lossy optical element, rather than one of these unitary gates.
+For $Q$ I use a QWP at 0°, with the convention that it multiplies the V amplitude by $i$. All five matrices preserve normalization in the ideal model. The LP prepares the input before these gates by transmitting the selected linear polarization and discarding some light.
 
 I judged the results by the spots on paper. The ideal fractions come from the matrices; my approximate real ratios are visual estimates. I did not use the unfinished photodiode readout or calculate intensities from camera pixels.
+
+## Reading the spots in the photographs
+
+For these visual comparisons I focus on the **compact dots at the two PBS output positions**. Several photographs also show a broad green halo around a dot. I treat that glow as an imperfection and set it aside when comparing the dots: the total illuminated area can give a misleading impression of which output is stronger.
+
+This matters particularly in the LP(V), single-NOT and Deutsch–Jozsa photographs. A distinct compact dot in the unwanted output is still real leakage. Looking past the halo is a qualitative viewing choice, not a calibrated correction of total optical power. I have not established its cause, so I do not identify it as dispersion from these images alone.
 
 ## 1. Finding H and V
 
@@ -80,7 +86,7 @@ Rotating it by 90° let me identify the two output channels. For ideal H input, 
 | --- | --- |
 | ![My H preparation with a linear polarizer and the PBS output spots](../images/lp_h.jpg) | ![My V preparation after rotating the linear polarizer by 90 degrees](../images/lp_v.jpg) |
 
-*The same setup with the LP rotated. I used this comparison to name the output channels.*
+*The same setup with the LP rotated. In the V photograph, focus on the compact dots rather than the diffuse glow around them when judging which channel is brighter.*
 
 The bright output changed as expected. It gave me a reference for the rest of the experiments, although weak light in the other direction could still come from imperfect extinction, alignment or scattering. I did not measure an extinction ratio.
 
@@ -188,7 +194,7 @@ I also tried two NOT plates:
 | --- | --- |
 | ![My single-NOT optical sequence with one HWP after the LP](../images/not.jpg) | ![My double-NOT sequence with two HWP cassettes after the LP](../images/double_not.jpg) |
 
-*The single- and double-plate tests. The photograph records the cassette arrangement; its labels do not measure the true optical axes.*
+*The single- and double-plate tests. In the one-NOT photograph, compare the compact dots and set aside the broad surrounding glow. The cassette labels do not measure the true optical axes.*
 
 For two ideal plates at +45°, the matrices multiply to
 
@@ -216,15 +222,33 @@ In practice the crossed +45°/−45° combination looked better than some same-o
 
 ## 5. Reaching the Deutsch–Jozsa experiment
 
-This was the sequence I had wanted to reach from the start:
+This was the sequence I had wanted to reach from the start. Before putting in the oracle plate, I needed to be clear about the problem it represents.
 
-`LP(H) → HWP(22.5°) → Oracle → HWP(22.5°) → PBS`.
-
-For a one-bit Boolean function, there are only four possibilities. If $f(0)=f(1)$ it is constant; otherwise it is balanced. I use the phase-oracle form,
+Imagine a black box containing a function $f$ that accepts one bit and returns one bit:
 
 $$
-U_f|x\rangle=(-1)^{f(x)}|x\rangle.
+f:\{0,1\}\longrightarrow\{0,1\}.
 $$
+
+I can ask for $f(0)$ or $f(1)$; each request is one **query**. The question is whether the two answers are the same (**constant**) or different (**balanced**). I only need that classification, not both answers separately. This one-input case is usually called **Deutsch's problem**; it is the smallest case of Deutsch–Jozsa.
+
+A classical algorithm that must always be correct needs both values. After learning, for example, $f(0)=0$, I still cannot tell whether $f(1)$ is 0 or 1. The ideal quantum algorithm applies its oracle once to a superposition and determines the class after the final Hadamard. This is the **one-query versus two-query** comparison explained in [IBM Quantum's lesson on Deutsch's algorithm](https://quantum.cloud.ibm.com/learning/en/courses/fundamentals-of-quantum-algorithms/quantum-query-algorithms/deutsch-algorithm).
+
+The comparison counts oracle uses, not elapsed time or every operation in a computer. My optical setup illustrates the algebra with a classical beam; it is not a demonstration that my apparatus runs faster than a classical PC.
+
+### Writing the black box as a phase matrix
+
+I use a phase oracle: the function value controls the sign of each basis amplitude,
+
+$$
+U_f=
+\begin{pmatrix}
+(-1)^{f(0)}&0\\
+0&(-1)^{f(1)}
+\end{pmatrix}.
+$$
+
+Because $(-1)^0=1$ and $(-1)^1=-1$, the four possibilities are easy to list:
 
 | f(0) | f(1) | Class | Phase oracle |
 | --- | --- | --- | --- |
@@ -233,27 +257,84 @@ $$
 | 0 | 1 | Balanced | Z |
 | 1 | 0 | Balanced | −Z |
 
-The signs multiplying the entire oracle are global phases, so I only need to compare identity and Z. I leave the oracle position empty for identity and insert an HWP at 0° for Z.
+The global minus signs do not change the output intensities. I therefore only need an empty oracle position for I and an HWP at 0° for Z. My optical chain is
 
-The first Hadamard makes a superposition, the oracle changes its phases, and the last Hadamard makes the difference visible:
+`LP(H) → HWP(22.5°) → Oracle → HWP(22.5°) → PBS`.
+
+### Following the state through the three steps
+
+First, H takes my prepared input to
 
 $$
-HU_fH|0\rangle=
-\frac{(-1)^{f(0)}+(-1)^{f(1)}}{2}|0\rangle+
-\frac{(-1)^{f(0)}-(-1)^{f(1)}}{2}|1\rangle.
+|\psi_1\rangle=H|H\rangle
+=\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}.
 $$
 
-For a constant function, the V amplitude cancels and I expect 100/0. For a balanced function, H cancels and I expect 0/100. Equivalently, $HIH=I$ while $HZH=X$.
+For shorter arithmetic, I call the two oracle signs $s_0=(-1)^{f(0)}$ and $s_1=(-1)^{f(1)}$. Each is either +1 or −1. The oracle gives
+
+$$
+|\psi_2\rangle=
+\begin{pmatrix}s_0&0\\0&s_1\end{pmatrix}
+\frac1{\sqrt2}\begin{pmatrix}1\\1\end{pmatrix}
+=\frac1{\sqrt2}\begin{pmatrix}s_0\\s_1\end{pmatrix}.
+$$
+
+At this point the squared magnitudes are still 50/50 in every case. The information is in the signs. The final H makes those signs affect the output:
+
+$$
+|\psi_{\mathrm{out}}\rangle
+=\frac12
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+\begin{pmatrix}s_0\\s_1\end{pmatrix}
+=\frac12\begin{pmatrix}s_0+s_1\\s_0-s_1\end{pmatrix}.
+$$
+
+For the identity oracle, both signs are +1:
+
+$$
+HIH|H\rangle
+=\frac12\begin{pmatrix}1+1\\1-1\end{pmatrix}
+=\begin{pmatrix}1\\0\end{pmatrix}=|H\rangle.
+$$
+
+For the Z oracle, the signs are +1 and −1:
+
+$$
+HZH|H\rangle
+=\frac12\begin{pmatrix}1+(-1)\\1-(-1)\end{pmatrix}
+=\begin{pmatrix}0\\1\end{pmatrix}=|V\rangle.
+$$
+
+Equal signs cancel in the bottom entry; opposite signs cancel in the top one. This is interference written as addition and subtraction. I obtain the classification without reading out the two function values individually.
+
+At the gate level the constant sequence is $HIH=H^2=I$. For the balanced sequence I can also multiply the matrices directly:
+
+$$
+\begin{aligned}
+HZH
+&=\frac12
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+\begin{pmatrix}1&0\\0&-1\end{pmatrix}
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}\\
+&=\frac12
+\begin{pmatrix}1&1\\1&-1\end{pmatrix}
+\begin{pmatrix}1&1\\-1&1\end{pmatrix}\\
+&=\frac12\begin{pmatrix}0&2\\2&0\end{pmatrix}
+=\begin{pmatrix}0&1\\1&0\end{pmatrix}=X.
+\end{aligned}
+$$
+
+The ideal PBS result is therefore 100/0 for a constant function and 0/100 for a balanced one.
 
 | Constant: identity oracle | Balanced: Z oracle |
 | --- | --- |
 | ![My constant-oracle experiment with an empty oracle position between the two Hadamard plates](../images/dj_constant_i.jpg) | ![My balanced-oracle experiment with an additional HWP implementing Z between the Hadamard plates](../images/dj_balanced_z.jpg) |
 
-*The two oracle configurations. Inserting a phase plate changes which output is bright after the final Hadamard.*
+*The two oracle configurations. I compare the compact output dots here; the surrounding green glow can make the illuminated area look misleadingly large.*
 
-I saw the expected qualitative output swap, although the unwanted channel was not completely dark. By then I was composing three real HWPs, so axis offsets, retardance errors and alignment all had opportunities to affect the contrast.
+I saw the expected qualitative output swap, although the unwanted channel was not completely dark. I treat the broad halo as an imperfection and focus on the dots for this visual comparison. A distinct weak dot in the other output still counts as leakage. By then I was composing three real HWPs, so axis offsets, retardance errors and alignment could all affect the contrast; I did not establish the cause of the halo.
 
-In the ideal oracle model, one query distinguishes the two classes; a deterministic classical bit-query procedure needs both function values in the worst case. My apparatus is a classical optical implementation of the phase transformation and does not demonstrate quantum advantage. In the usual two-register bit-flip version, a target prepared as $|-\rangle$ factors out the phase $(-1)^{f(x)}$ on the input. I implement that reduced phase action, without an extra physical target register.
+In the usual two-register quantum version, the oracle flips a target bit when $f(x)=1$. Preparing that target as $|-\rangle=(|0\rangle-|1\rangle)/\sqrt2$ makes a flip multiply it by −1, so the input acquires the factor $(-1)^{f(x)}$. That is the phase action I model here, without building an additional target register. Selecting known optical I and Z configurations demonstrates this principle, rather than benchmarking an unknown quantum oracle.
 
 ## 6. Looking for the phase that H/V could not show
 

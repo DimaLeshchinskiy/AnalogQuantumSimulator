@@ -6,6 +6,8 @@ The setup did what I wanted in the sense that mattered to this project: I could 
 
 Some combinations left almost all the visible light in one channel. Others looked closer to 60/40. In the QWP comparison, I estimated about 80/20 without the QWP after the analyzer, and about 40/60 with it. Those are visual estimates. The photographs record the experiment, but exposure and saturated spots do not give me calibrated intensity ratios or gate fidelity.
 
+The LP(V), single-NOT and Deutsch–Jozsa photographs also show diffuse light around the compact output dots. For visual comparisons I focus on the dots and treat the broad glow as an imperfection. That does not make the extra light disappear from a quantitative power measurement, and a separate faint dot still counts as leakage. I have not isolated the halo's cause; the photographs alone do not establish dispersion. A quantitative comparison would need consistent light-collection areas and background treatment.
+
 ## A plate can be wrong in more than one way
 
 At first it is tempting to explain a weak second spot just by saying the angle is wrong. Angle is one possibility, but retardance is another. Starting with H and using the retarder convention from the theory chapter gives
